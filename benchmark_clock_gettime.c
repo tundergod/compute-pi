@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
         compute_pi_baseline(N);
     }
     clock_gettime(CLOCK_ID, &end);
-    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
            (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 
 
@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
         compute_pi_openmp(N, 2);
     }
     clock_gettime(CLOCK_ID, &end);
-    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
            (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 
 
@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
         compute_pi_openmp(N, 4);
     }
     clock_gettime(CLOCK_ID, &end);
-    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
            (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 
 
@@ -52,7 +52,7 @@ int main(int argc, char const *argv[])
         compute_pi_avx(N);
     }
     clock_gettime(CLOCK_ID, &end);
-    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
            (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 
 
@@ -60,6 +60,61 @@ int main(int argc, char const *argv[])
     clock_gettime(CLOCK_ID, &start);
     for(i = 0; i < loop; i++) {
         compute_pi_avx_unroll(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+//Leibniz
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_leibniz(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+
+//Leibniz with avx
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_leibniz_avx(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+// Leibniz with avx and unrolling
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_leibniz_avx_unroll(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+// mente carlo
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_montecarlo(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+// mente carlo openmp 2
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_montecarlo_openmp(N,2);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+// mente carlo openmp 4
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_montecarlo_openmp(N,4);
     }
     clock_gettime(CLOCK_ID, &end);
     printf("%lf\n", (double) (end.tv_sec - start.tv_sec) +
